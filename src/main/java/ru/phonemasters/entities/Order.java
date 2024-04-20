@@ -1,11 +1,7 @@
 package ru.phonemasters.entities;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,6 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Table(name = "`Order`")
 public class Order {
@@ -31,13 +28,9 @@ public class Order {
             generator = "order_sequence"
     )
     @Column(
-            name = "row_id",
+            name = "id",
             updatable = false
     )
-    private Long rowId;
-
-    @Column
-    @NotEmpty
     private Long id;
 
     @Column
@@ -50,6 +43,10 @@ public class Order {
 
     @Column
     @NotEmpty
+    private String deviceModel;
+
+    @Column
+    @NotEmpty
     private String originalComplaint;
 
     @Column
@@ -58,11 +55,11 @@ public class Order {
 
     @Column
     @NotNull
-    private BigDecimal originalPrice;
+    private Long originalPrice;
 
     @Column
     @NotNull
-    private BigDecimal agreedPrice;
+    private Long agreedPrice;
 
     @Column
     @NotNull

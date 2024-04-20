@@ -5,13 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.phonemasters.entities.Order;
 import ru.phonemasters.services.OrderService;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
+@RequestMapping("/admin/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -21,9 +23,9 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/admin/orders")
+    @GetMapping()
     public String getOrdersPage(Model model, @PathVariable(required = false) String phoneNumber) {
-        List<Order> orders = new ArrayList<>();
+        List<Order> orders;
         if (phoneNumber != null) {
             Long number = null;
             try {
@@ -39,7 +41,22 @@ public class OrderController {
             orders = orderService.getAllOrders();
         }
         model.addAttribute("orders", orders);
-        System.out.println(orders);
-        return "Orders";
+        return "orders/Orders";
     }
+
+    @GetMapping("/create")
+    public String getOrderCreatePage(Model model) {
+        return "orders/CreateOrder";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String getOrderEditPage(Model model, @PathVariable Long id) {
+        Optional<Order> optionalOrder = orderService.getOrderById(id);
+        if (optionalOrder.isEmpty()) {
+            return "orders/OrderNotFound";
+        }
+        model.addAttribute("order", optionalOrder.get());
+        return "orders/EditOrder";
+    }
+
 }

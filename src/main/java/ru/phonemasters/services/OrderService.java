@@ -1,13 +1,12 @@
 package ru.phonemasters.services;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.phonemasters.entities.Order;
 import ru.phonemasters.repositories.OrderRepository;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -28,12 +27,16 @@ public class OrderService {
     }
 
     public List<Order> getAllOrders() {
-        System.out.println(orderRepository.findAll());
         return orderRepository.findAll();
     }
 
-    public void saveOrder(Order order) {
-        orderRepository.save(order);
+    public Optional<Order> getOrderById(Long id) {
+        return orderRepository.findById(id);
+    }
+
+
+    public Order saveOrder(Order order) {
+        return orderRepository.save(order);
     }
 
 /*    @PostConstruct

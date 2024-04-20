@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phonemasters</title>
+</head>
+<body>
+<form action="http://localhost:8080/api/v1/orders/create" method="POST">
+    <div>
+        <label for="name">Введите имя клиента</label>
+        <input name="name" id="name" value="" />
+    </div>
+    <div>
+        <label for="phoneNumber">Номер телефона с 8</label>
+        <input type="number" name="phoneNumber" id="phoneNumber" value="8" />
+    </div>
+    <div>
+        <label for="deviceModel">Введите название устройства</label>
+        <input name="deviceModel" id="deviceModel" value="" />
+    </div>
+    <div>
+        <label for="originalComplaint">Опишите проблему</label>
+        <input name="originalComplaint" id="originalComplaint" value="" />
+    </div>
+    <div>
+        <label for="originalPrice">Введите изначальную цену</label>
+        <input type="number" name="originalPrice" id="originalPrice" value="" />
+    </div>
+    <div>
+        <button>Создать заказ</button>
+    </div>
+</form>
+
+
+</body>
+</html>

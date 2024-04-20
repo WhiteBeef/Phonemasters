@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phonemasters</title>
+</head>
+<body>
+<form th:action="'http://localhost:8080/api/v1/orders/update/'+${order.id}" method="POST">
+    <div>
+        <label for="name">Введите имя клиента</label>
+        <input name="name" id="name" th:value="${order.name}"/>
+    </div>
+    <div>
+        <label for="phoneNumber">Номер телефона с 8</label>
+        <input type="number" name="phoneNumber" id="phoneNumber" th:value="${order.phoneNumber}"/>
+    </div>
+    <div>
+        <label for="deviceModel">Введите название устройства</label>
+        <input name="deviceModel" id="deviceModel" th:value="${order.deviceModel}"/>
+    </div>
+    <div>
+        <label for="originalComplaint">Опишите проблему</label>
+        <input name="originalComplaint" id="originalComplaint" th:value="${order.originalComplaint}"/>
+    </div>
+    <div>
+        <label for="realComplaint">Опишите реальную проблему</label>
+        <input name="realComplaint" id="realComplaint" th:value="${order.realComplaint}"/>
+    </div>
+    <div>
+        <label for="originalPrice">Введите изначальную цену</label>
+        <input type="number" name="originalPrice" id="originalPrice" th:value="${order.originalPrice}"/>
+    </div>
+    <div>
+        <label for="agreedPrice">Введите согласованную цену</label>
+        <input type="number" name="agreedPrice" id="agreedPrice" th:value="${order.agreedPrice}"/>
+    </div>
+    <div>
+        <label for="repairState">Выберите состояние ремонта:</label>
+        <select id="repairState" name="repairState">
+            <option th:selected="${order.repairState.name()=='ACCEPTED'}" value="ACCEPTED">Принято</option>
+            <option th:selected="${order.repairState.name()=='PENDING'}" value="PENDING">Ожидает</option>
+            <option th:selected="${order.repairState.name()=='UNDER_REPAIR'}" value="UNDER_REPAIR">Ремонтируется</option>
+            <option th:selected="${order.repairState.name()=='REPAIRED'}" value="REPAIRED">Отремонтирован</option>
+        </select>
+    </div>
+    <div>
+        <label for="paymentState">Выберите состояние ремонта:</label>
+        <select id="paymentState" name="paymentState">
+            <option th:selected="${order.paymentState.name()=='NOT_PAID'}" value="NOT_PAID">Не оплачено</option>
+            <option th:selected="${order.paymentState.name()=='PARTLY_PAID'}" value="PARTLY_PAID">Частично оплачено</option>
+            <option th:selected="${order.paymentState.name()=='FULL_PAID'}" value="FULL_PAID">Полностью оплачено</option>
+        </select>
+    </div>
+    <div>
+        <button>Сохранить заказ</button>
+    </div>
+</form>
+
+</body>
+</html>

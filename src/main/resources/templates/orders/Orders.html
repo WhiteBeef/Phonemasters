@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/orders_style.css.css?v=1.4" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script th:if="${@environment.acceptsProfiles('dev','local')}" src="http://localhost:35729/livereload.js"
+            defer></script>
+
+    <title>Phonemasters</title>
+</head>
+<body>
+
+<div class="orders">
+    <ul th:each="order : ${orders}" class="order-list">
+
+        <div class="order-container" th:id="${order.id}">
+            <div class="order-contact-information">
+                <div class="name" th:text="${order.name}"></div>
+                <div class="phoneNumber" th:text="${order.phoneNumber}"></div>
+            </div>
+            <div class="deviceModel">
+                <div class="deviceModel" th:text="${order.deviceModel}"></div>
+            </div>
+            <div class="description-container">
+                <div class="description" th:text="'Жалоба: ' + ${order.originalComplaint}"></div>
+            </div>
+            <div class="price-container">
+                <div class="originalPrice" th:text="${order.agreedPrice} == null
+                ? 'Приблизительная цена ' +${order.originalPrice} : ${order.agreedPrice}"></div>
+            </div>
+
+            <div class="edit-button-container">
+                <a th:href="'orders/edit/'+${order.id}">
+                    <button class="edit-button">Редактировать</button>
+                </a>
+            </div>
+        </div>
+
+
+    </ul>
+</div>
+<div class="create-order">
+    <a href="orders/create">
+        <button class="create-button">Создать заказ</button>
+    </a>
+</div>
+
+</body>
+</html>
