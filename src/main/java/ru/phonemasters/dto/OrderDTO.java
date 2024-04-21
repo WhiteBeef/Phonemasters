@@ -1,8 +1,12 @@
 package ru.phonemasters.dto;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.phonemasters.entities.Order;
+
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -16,4 +20,6 @@ public class OrderDTO {
     private String realComplaint;
     private Long originalPrice;
     private Long agreedPrice;
+    private Order.RepairState repairState;
+    private Order.PaymentState paymentState;
 }

@@ -11,4 +11,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findById(@NotNull Long id);
 
     List<Order> findAllByPhoneNumber(@NotNull Long phoneNumber);
+
+    List<Order> findAllByOrderByIdDesc();
 }

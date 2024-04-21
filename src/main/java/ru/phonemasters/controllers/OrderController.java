@@ -1,5 +1,6 @@
 package ru.phonemasters.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,29 +24,43 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping()
-    public String getOrdersPage(Model model, @PathVariable(required = false) String phoneNumber) {
-        List<Order> orders;
-        if (phoneNumber != null) {
-            Long number = null;
-            try {
-                number = Long.parseLong(phoneNumber);
-            } catch (NumberFormatException ignored) {
-            }
-            if (number != null) {
-                orders = orderService.getOrders(number);
-            } else {
-                orders = orderService.getAllOrders();
-            }
-        } else {
-            orders = orderService.getAllOrders();
+    @GetMapping("/{page}")
+    public String getOrdersPage(Model model, @PathVariable(required = false) Long page) {
+        List<Order> orders = orderService.getAllOrdersReversed();
+        if (page == null) {
+            page = 1L;
         }
+        long pagesCount = orders.size() / 10 + 1L;
+
+        if (page > pagesCount) {
+            return "redirect:/admin/orders/" + pagesCount;
+        }
+
+        orders = orders.stream()
+                .skip((page - 1) * 10)
+                .limit(10)
+                .toList();
+
+        model.addAttribute("pagesCount", pagesCount);
         model.addAttribute("orders", orders);
+        model.addAttribute("page", page);
+
         return "orders/Orders";
     }
 
+    @GetMapping("")
+    public String redirectToFirstPage() {
+        return "redirect:orders/1";
+    }
+
+    @GetMapping("/")
+    public String secondRedirectToFirstPage() {
+        return "redirect:1";
+    }
+
     @GetMapping("/create")
-    public String getOrderCreatePage(Model model) {
+    public String getOrderCreatePage(HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
         return "orders/CreateOrder";
     }
 

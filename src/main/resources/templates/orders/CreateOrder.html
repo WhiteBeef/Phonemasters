@@ -5,32 +5,60 @@
     <title>Phonemasters</title>
 </head>
 <body>
-<form action="http://localhost:8080/api/v1/orders/create" method="POST">
+<form>
     <div>
         <label for="name">Введите имя клиента</label>
-        <input name="name" id="name" value="" />
+        <input name="name" id="name" value=""/>
     </div>
     <div>
         <label for="phoneNumber">Номер телефона с 8</label>
-        <input type="number" name="phoneNumber" id="phoneNumber" value="8" />
+        <input type="tel" name="phoneNumber" id="phoneNumber" value="8"/>
     </div>
     <div>
         <label for="deviceModel">Введите название устройства</label>
-        <input name="deviceModel" id="deviceModel" value="" />
+        <input name="deviceModel" id="deviceModel" value=""/>
     </div>
     <div>
         <label for="originalComplaint">Опишите проблему</label>
-        <input name="originalComplaint" id="originalComplaint" value="" />
+        <input name="originalComplaint" id="originalComplaint" value=""/>
     </div>
     <div>
         <label for="originalPrice">Введите изначальную цену</label>
-        <input type="number" name="originalPrice" id="originalPrice" value="" />
+        <input type="number" name="originalPrice" id="originalPrice" value=""/>
     </div>
     <div>
-        <button>Создать заказ</button>
+        <button type="button" onclick="onClickSubmit()">Создать заказ</button>
     </div>
 </form>
 
 
 </body>
+<script>
+
+    async function onClickSubmit() {
+        name = document.getElementById('name').value
+        phoneNumber = document.getElementById('phoneNumber').value
+        deviceModel = document.getElementById('deviceModel').value
+        originalComplaint = document.getElementById('originalComplaint').value
+        originalPrice = document.getElementById('originalPrice').value
+
+
+        await fetch(new URL("http://localhost:8080/api/v1/orders/create"), {
+            method: "POST",
+            body: JSON.stringify({
+                "name": name,
+                "phoneNumber": Number(phoneNumber),
+                "deviceModel": deviceModel,
+                "originalComplaint": originalComplaint,
+                "originalPrice": Number(originalPrice)
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Access-Control-Allow-Origin": "*"
+            }
+        });
+
+        window.location.replace("http://localhost:8080/admin/orders/1");
+    }
+</script>
 </html>

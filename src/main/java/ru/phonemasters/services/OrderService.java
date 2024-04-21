@@ -30,6 +30,10 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> getAllOrdersReversed() {
+        return orderRepository.findAllByOrderByIdDesc();
+    }
+
     public Optional<Order> getOrderById(Long id) {
         return orderRepository.findById(id);
     }
@@ -39,11 +43,5 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-/*    @PostConstruct
-    public void addOrder() {
-        Order order = new Order(2L, 1L, "Павел", 89967632663L, "Телефон сел", "", BigDecimal.valueOf(Long.valueOf(100)), BigDecimal.valueOf(Long.valueOf(100)), Order.RepairState.PENDING, Order.PaymentState.FULL_PAID);
-
-        saveOrder(order);
-    }*/
 
 }

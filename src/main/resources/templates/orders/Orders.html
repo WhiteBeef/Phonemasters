@@ -31,7 +31,7 @@
             </div>
 
             <div class="edit-button-container">
-                <a th:href="'orders/edit/'+${order.id}">
+                <a th:href="'/admin/orders/edit/'+${order.id}">
                     <button class="edit-button">Редактировать</button>
                 </a>
             </div>
@@ -41,10 +41,20 @@
     </ul>
 </div>
 <div class="create-order">
-    <a href="orders/create">
+    <a href="http://localhost:8080/admin/orders/create">
         <button class="create-button">Создать заказ</button>
     </a>
 </div>
+
+<div class="navigave_buttons">
+    <a th:if="${page > 1}" th:href="'/admin/orders/'+(${page} - 1)">
+        <button class="previous_page">Назад</button>
+    </a>
+    <a th:if="${page < pagesCount}" th:href="'/admin/orders/'+(${page} + 1)">
+        <button class="next_page">Вперед</button>
+    </a>
+</div>
+
 
 </body>
 </html>

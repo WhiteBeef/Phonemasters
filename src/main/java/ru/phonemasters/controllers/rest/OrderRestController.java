@@ -24,16 +24,7 @@ public class OrderRestController {
 
     @PostMapping("/update/{id}")
     @ResponseBody
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id,
-                                             @RequestParam(required = false) String name,
-                                             @RequestParam(required = false) Long phoneNumber,
-                                             @RequestParam(required = false) String deviceModel,
-                                             @RequestParam(required = false) String originalComplaint,
-                                             @RequestParam(required = false) String realComplaint,
-                                             @RequestParam(required = false) Long originalPrice,
-                                             @RequestParam(required = false) Long agreedPrice,
-                                             @RequestParam(required = false) String repairState,
-                                             @RequestParam(required = false) String paymentState) {
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody OrderDTO orderDto) {
 
 
         Optional<Order> optionalOrder = orderService.getOrderById(id);
@@ -41,50 +32,28 @@ public class OrderRestController {
             return ResponseEntity.status(404).body(null);
         }
         Order order = optionalOrder.get();
-        if (name != null) {
-            order.setName(name);
-        }
-        if (phoneNumber != null) {
-            order.setPhoneNumber(phoneNumber);
-        }
-        if (deviceModel != null) {
-            order.setDeviceModel(deviceModel);
-        }
-        if (originalComplaint != null) {
-            order.setOriginalComplaint(originalComplaint);
-        }
-        if (realComplaint != null) {
-            order.setRealComplaint(realComplaint);
-        }
-        if (originalPrice != null) {
-            order.setOriginalPrice(originalPrice);
-        }
-        if (agreedPrice != null) {
-            order.setAgreedPrice(agreedPrice);
-        }
-        if (repairState != null) {
-            order.setRepairState(Order.RepairState.valueOf(repairState.toUpperCase()));
-        }
-        if (paymentState != null) {
-            order.setPaymentState(Order.PaymentState.valueOf(paymentState.toUpperCase()));
-        }
+        order.setName(orderDto.getName());
+        order.setPhoneNumber(orderDto.getPhoneNumber());
+        order.setOriginalComplaint(orderDto.getOriginalComplaint());
+        order.setRealComplaint(orderDto.getRealComplaint());
+        order.setOriginalPrice(orderDto.getOriginalPrice());
+        order.setAgreedPrice(orderDto.getAgreedPrice());
+        order.setRepairState(orderDto.getRepairState());
+        order.setPaymentState(orderDto.getPaymentState());
 
         return ResponseEntity.ok(orderService.saveOrder(order));
     }
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<Order> createOrder(@RequestParam String name,
-                                             @RequestParam Long phoneNumber,
-                                             @RequestParam String deviceModel,
-                                             @RequestParam String originalComplaint,
-                                             @RequestParam Long originalPrice) {
+    @CrossOrigin(origins = "localhost:8080")
+    public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDto) {
         Order.OrderBuilder builder = Order.builder();
-        builder.name(name);
-        builder.phoneNumber(phoneNumber);
-        builder.deviceModel(deviceModel);
-        builder.originalComplaint(originalComplaint);
-        builder.originalPrice(originalPrice);
+        builder.name(orderDto.getName());
+        builder.phoneNumber(orderDto.getPhoneNumber());
+        builder.deviceModel(orderDto.getDeviceModel());
+        builder.originalComplaint(orderDto.getOriginalComplaint());
+        builder.originalPrice(orderDto.getOriginalPrice());
         builder.repairState(Order.RepairState.ACCEPTED);
         builder.paymentState(Order.PaymentState.NOT_PAID);
         return ResponseEntity.ok(orderService.saveOrder(builder.build()));
