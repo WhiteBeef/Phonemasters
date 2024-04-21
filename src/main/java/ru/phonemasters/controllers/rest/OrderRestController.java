@@ -22,7 +22,7 @@ public class OrderRestController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     @ResponseBody
     public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody OrderDTO orderDto) {
 
@@ -37,7 +37,11 @@ public class OrderRestController {
         order.setOriginalComplaint(orderDto.getOriginalComplaint());
         order.setRealComplaint(orderDto.getRealComplaint());
         order.setOriginalPrice(orderDto.getOriginalPrice());
-        order.setAgreedPrice(orderDto.getAgreedPrice());
+        if (orderDto.getAgreedPrice() == 0) {
+            order.setAgreedPrice(null);
+        } else {
+            order.setAgreedPrice(orderDto.getAgreedPrice());
+        }
         order.setRepairState(orderDto.getRepairState());
         order.setPaymentState(orderDto.getPaymentState());
 

@@ -12,7 +12,7 @@
     </div>
     <div>
         <label for="phoneNumber">Номер телефона с 8</label>
-        <input type="number" name="phoneNumber" id="phoneNumber" th:value="${order.phoneNumber}"/>
+        <input type="tel" name="phoneNumber" id="phoneNumber" th:value="${order.phoneNumber}"/>
     </div>
     <div>
         <label for="deviceModel">Введите название устройства</label>
@@ -39,7 +39,8 @@
         <select id="repairState" name="repairState">
             <option th:selected="${order.repairState.name()=='ACCEPTED'}" value="ACCEPTED">Принято</option>
             <option th:selected="${order.repairState.name()=='PENDING'}" value="PENDING">Ожидает</option>
-            <option th:selected="${order.repairState.name()=='UNDER_REPAIR'}" value="UNDER_REPAIR">Ремонтируется</option>
+            <option th:selected="${order.repairState.name()=='UNDER_REPAIR'}" value="UNDER_REPAIR">Ремонтируется
+            </option>
             <option th:selected="${order.repairState.name()=='REPAIRED'}" value="REPAIRED">Отремонтирован</option>
         </select>
     </div>
@@ -47,14 +48,52 @@
         <label for="paymentState">Выберите состояние ремонта:</label>
         <select id="paymentState" name="paymentState">
             <option th:selected="${order.paymentState.name()=='NOT_PAID'}" value="NOT_PAID">Не оплачено</option>
-            <option th:selected="${order.paymentState.name()=='PARTLY_PAID'}" value="PARTLY_PAID">Частично оплачено</option>
-            <option th:selected="${order.paymentState.name()=='FULL_PAID'}" value="FULL_PAID">Полностью оплачено</option>
+            <option th:selected="${order.paymentState.name()=='PARTLY_PAID'}" value="PARTLY_PAID">Частично оплачено
+            </option>
+            <option th:selected="${order.paymentState.name()=='FULL_PAID'}" value="FULL_PAID">Полностью оплачено
+            </option>
         </select>
     </div>
     <div>
-        <button>Сохранить заказ</button>
+        <button type="button" th:onclick="'onClickSubmit('+${order.id}+')'">Сохранить заказ</button>
     </div>
 </form>
 
 </body>
+<script>
+    async function onClickSubmit(id) {
+        name = document.getElementById('name').value
+        phoneNumber = document.getElementById('phoneNumber').value
+        deviceModel = document.getElementById('deviceModel').value
+        originalComplaint = document.getElementById('originalComplaint').value
+        realComplaint = document.getElementById('realComplaint').value
+        originalPrice = document.getElementById('originalPrice').value
+        agreedPrice = document.getElementById('agreedPrice').value
+        repairState = document.getElementById('repairState').value
+        paymentState = document.getElementById('paymentState').value
+        console.log(repairState + " " + paymentState)
+
+
+        await fetch(new URL('http://localhost:8080/api/v1/orders/update/' + id), {
+            method: "PUT",
+            body: JSON.stringify({
+                "name": name,
+                "phoneNumber": Number(phoneNumber),
+                "deviceModel": deviceModel,
+                "originalComplaint": originalComplaint,
+                "realComplaint": realComplaint,
+                "originalPrice": Number(originalPrice),
+                "agreedPrice": Number(agreedPrice),
+                "repairState": repairState,
+                "paymentState": paymentState
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Access-Control-Allow-Origin": "*"
+            }
+        });
+
+        window.location.replace("http://localhost:8080/admin/orders/1");
+    }
+</script>
 </html>
