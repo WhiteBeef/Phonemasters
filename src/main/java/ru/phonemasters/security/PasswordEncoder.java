@@ -1,4 +1,4 @@
-package ru.phonemasters.security.encoders;
+package ru.phonemasters.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

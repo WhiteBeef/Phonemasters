@@ -19,17 +19,22 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url 'https://repo.spring.io/snapshot' }
+    maven { url 'https://repo.spring.io/milestone' }
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
     implementation 'org.springframework:spring-tx:6.1.6'
     implementation 'org.jetbrains:annotations:24.0.0'
+    //implementation 'org.apache.commons:commons-lang3:3.0'
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
@@ -37,8 +42,12 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
     implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '2.0.2'
+
+
+
 }
 
 tasks.named('test') {

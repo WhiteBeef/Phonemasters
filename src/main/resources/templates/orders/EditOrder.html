@@ -76,6 +76,7 @@
 
         await fetch(new URL('http://localhost:8080/api/v1/orders/update/' + id), {
             method: "PUT",
+            credentials: 'include',
             body: JSON.stringify({
                 "name": name,
                 "phoneNumber": Number(phoneNumber),
@@ -91,9 +92,9 @@
                 "Content-type": "application/json; charset=UTF-8",
                 "Access-Control-Allow-Origin": "*"
             }
-        });
-
-        window.location.replace("http://localhost:8080/admin/orders/1");
+        })//.then(res => window.location.replace("http://localhost:8080/admin/orders/1"))
+            .catch(err => console.log(err));
     }
+
 </script>
 </html>

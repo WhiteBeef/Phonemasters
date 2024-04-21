@@ -1,7 +1,9 @@
 package ru.phonemasters.services;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,12 +12,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.phonemasters.dto.UserDTO;
 import ru.phonemasters.entities.User;
+import ru.phonemasters.entities.UserRole;
 import ru.phonemasters.repositories.UserRepository;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Log4j2
 public class UserService implements UserDetailsService {
 
     private static final String USER_NOT_FOUND_MSG = "user with email %s not found";
@@ -39,10 +43,20 @@ public class UserService implements UserDetailsService {
         }
 
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-
         user.setPassword(encodedPassword);
-
+        user.setEnabled(true);
         userRepository.save(user);
+    }
+
+    @PostConstruct
+    private void signUpAdmin() {
+        if (!userRepository.findAll().isEmpty()) {
+            return;
+        }
+
+        User user = new User("Phonemasters", "Admin", "admin@phonemasters.ru", "popTanjIDfwQ", UserRole.ADMIN);
+        log.info("Aunthetification credentials: admin@phonemasters.ru : popTanjIDfwQ");
+        signUpUser(user);
     }
 
     public User findUserByEmail(String email) {
