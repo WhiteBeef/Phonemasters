@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.4'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'application'
 }
 
 group = 'ru.phonemasters'
@@ -9,6 +10,10 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     sourceCompatibility = '17'
+}
+
+application {
+    mainClass = 'ru.phonemasters.PhonemastersApplication'
 }
 
 configurations {
@@ -29,11 +34,18 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.2'
+
+    implementation 'io.jsonwebtoken:jjwt:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
     implementation 'org.springframework:spring-tx:6.1.6'
     implementation 'org.jetbrains:annotations:24.0.0'
-    //implementation 'org.apache.commons:commons-lang3:3.0'
+    implementation 'org.apache.commons:commons-lang3:3.0'
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

@@ -24,9 +24,8 @@ public class OrderRestController {
 
     @PutMapping("/update/{id}")
     @ResponseBody
+    @CrossOrigin(origins = "localhost:8080")
     public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody OrderDTO orderDto) {
-
-
         Optional<Order> optionalOrder = orderService.getOrderById(id);
         if (optionalOrder.isEmpty()) {
             return ResponseEntity.status(404).body(null);
@@ -51,7 +50,7 @@ public class OrderRestController {
     @PostMapping("/create")
     @ResponseBody
     @CrossOrigin(origins = "localhost:8080")
-    public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDto) {
+    public ResponseEntity<Order> createOrder( @RequestBody OrderDTO orderDto) {
         Order.OrderBuilder builder = Order.builder();
         builder.name(orderDto.getName());
         builder.phoneNumber(orderDto.getPhoneNumber());
@@ -65,6 +64,7 @@ public class OrderRestController {
 
     @PostMapping("/createmany")
     @ResponseBody
+    @CrossOrigin(origins = "localhost:8080")
     public ResponseEntity<List<Order>> createOrders(List<OrderDTO> orders) {
         List<Order> orderList = new ArrayList<>();
         for (OrderDTO orderDTO : orders) {
