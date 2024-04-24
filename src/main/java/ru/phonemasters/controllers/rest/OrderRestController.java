@@ -36,11 +36,7 @@ public class OrderRestController {
         order.setOriginalComplaint(orderDto.getOriginalComplaint());
         order.setRealComplaint(orderDto.getRealComplaint());
         order.setOriginalPrice(orderDto.getOriginalPrice());
-        if (orderDto.getAgreedPrice() == 0) {
-            order.setAgreedPrice(null);
-        } else {
-            order.setAgreedPrice(orderDto.getAgreedPrice());
-        }
+        order.setAgreedPrice(orderDto.getAgreedPrice());
         order.setRepairState(orderDto.getRepairState());
         order.setPaymentState(orderDto.getPaymentState());
 
@@ -50,7 +46,7 @@ public class OrderRestController {
     @PostMapping("/create")
     @ResponseBody
     @CrossOrigin(origins = "localhost:8080")
-    public ResponseEntity<Order> createOrder( @RequestBody OrderDTO orderDto) {
+    public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDto) {
         Order.OrderBuilder builder = Order.builder();
         builder.name(orderDto.getName());
         builder.phoneNumber(orderDto.getPhoneNumber());

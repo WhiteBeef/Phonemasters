@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Phonemasters</title>
+    <link rel="stylesheet" type="text/css" href="/css/InputStyle.css" />
+    <script src="/js/EditOrder.js" defer></script>
 </head>
 <body>
 <form th:action="'http://localhost:8080/api/v1/orders/update/'+${order.id}" method="POST">
     <div>
-        <label for="name">Введите имя клиента</label>
-        <input name="name" id="name" th:value="${order.name}"/>
+        <label for="firstName">Введите имя клиента</label>
+        <input name="firstName" id="firstName" th:value="${order.name}"/>
     </div>
     <div>
         <label for="phoneNumber">Номер телефона с 8</label>
@@ -55,45 +57,10 @@
         </select>
     </div>
     <div>
-        <button type="button" th:onclick="'onClickSubmit('+${order.id}+')'">Сохранить заказ</button>
+        <button id="submit-button" type="button" th:onclick="'onClickSubmit('+${order.id}+')'">Сохранить заказ</button>
     </div>
 </form>
 
 </body>
-<script>
-    async function onClickSubmit(id) {
-        name = document.getElementById('name').value
-        phoneNumber = document.getElementById('phoneNumber').value
-        deviceModel = document.getElementById('deviceModel').value
-        originalComplaint = document.getElementById('originalComplaint').value
-        realComplaint = document.getElementById('realComplaint').value
-        originalPrice = document.getElementById('originalPrice').value
-        agreedPrice = document.getElementById('agreedPrice').value
-        repairState = document.getElementById('repairState').value
-        paymentState = document.getElementById('paymentState').value
-        console.log(repairState + " " + paymentState)
 
-
-        await fetch(new URL('http://localhost:8080/api/v1/orders/update/' + id), {
-            method: "PUT",
-            credentials: 'include',
-            body: JSON.stringify({
-                "name": name,
-                "phoneNumber": Number(phoneNumber),
-                "deviceModel": deviceModel,
-                "originalComplaint": originalComplaint,
-                "realComplaint": realComplaint,
-                "originalPrice": Number(originalPrice),
-                "agreedPrice": Number(agreedPrice),
-                "repairState": repairState,
-                "paymentState": paymentState
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-            }
-        }).then(res => window.location.replace("http://localhost:8080/admin/orders/1"))
-            .catch(err => console.log(err));
-    }
-
-</script>
 </html>
