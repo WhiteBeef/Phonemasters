@@ -16,17 +16,21 @@ import ru.phonemasters.services.UserService;
 
 @RestController
 public class JwtAuthRestController {
-    private final UserService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public JwtAuthRestController(UserService userService, JwtService jwtService, AuthenticationManager authenticationManager) {
-        this.userService = userService;
+    public JwtAuthRestController(JwtService jwtService, AuthenticationManager authenticationManager) {
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }
 
+    /**
+     * Authenticates the user and returns a JWT token if successful.
+     *
+     * @param authRequestDTO the user's authentication request
+     * @return a JWT response containing the access token
+     */
     @PostMapping("/api/v1/login")
     @CrossOrigin(origins = "localhost:8080")
     public JwtResponseDTO AuthenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO) {

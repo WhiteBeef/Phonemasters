@@ -22,6 +22,13 @@ public class OrderRestController {
         this.orderService = orderService;
     }
 
+    /**
+     * Updates an existing order with the provided ID.
+     *
+     * @param id       the ID of the order to update
+     * @param orderDto the updated order details
+     * @return the updated order, or a 404 response if the order is not found
+     */
     @PutMapping("/update/{id}")
     @ResponseBody
     @CrossOrigin(origins = "localhost:8080")
@@ -43,6 +50,12 @@ public class OrderRestController {
         return ResponseEntity.ok(orderService.saveOrder(order));
     }
 
+    /**
+     * Creates a new order based on the provided order details.
+     *
+     * @param orderDto the order details to create a new order
+     * @return the created order
+     */
     @PostMapping("/create")
     @ResponseBody
     @CrossOrigin(origins = "localhost:8080")

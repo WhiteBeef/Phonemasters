@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phonemasters</title>
+    <script src="/js/CreateUser.js" defer></script>
+</head>
+<body>
+<form>
+    <div>
+        <label for="firstName">Введите имя</label>
+        <input name="firstName" id="firstName" value=""/>
+    </div>
+    <div>
+        <label for="lastName">Введите фамилию</label>
+        <input name="lastName" id="lastName" value=""/>
+    </div>
+    <div>
+        <label for="email">Введите почту</label>
+        <input name="email" id="email" value=""/>
+    </div>
+    <div>
+        <label for="password">Введите пароль</label>
+        <input name="password" id="password" value=""/>
+    </div>
+    <div>
+        <label for="userRole">Выберите роль пользователя:</label>
+        <select id="userRole" name="userRole">
+            <option th:selected="${order.repairState.name()=='USER'}" value="USER">Пользователь</option>
+            <option th:selected="${order.repairState.name()=='TRAINEE'}" value="TRAINEE">Ученик</option>
+            <option th:selected="${order.repairState.name()=='MASTER'}" value="MASTER">Мастер
+            </option>
+            <option th:selected="${order.repairState.name()=='ADMIN'}" value="ADMIN">Админ</option>
+        </select>
+    </div>
+    <div>
+        <button id="submit-button" type="button" onclick="onClickSubmit()">Зарегистрировать пользователя</button>
+    </div>
+</form>
+
+</body>
+</html>

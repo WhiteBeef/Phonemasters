@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phonemasters</title>
+</head>
+<body>
+
+<div class="users">
+    <ul th:each="user : ${users}" class="user-list">
+
+        <div class="user-container" th:id="${user.id}">
+            <div class="user-contact-information">
+                <span class="firstName" th:text="${user.firstName}"></span>
+                <span class="lastName" th:text="${user.lastName}"></span>
+                <span class="userRole" th:text="${user.getUserRole()}"></span>
+            </div>
+
+            <div class="edit-button-container">
+                <a th:href="'/admin/users/edit/'+${user.id}">
+                    <button class="edit-button">Редактировать</button>
+                </a>
+            </div>
+        </div>
+
+
+    </ul>
+</div>
+<div class="create-order">
+    <a href="http://localhost:8080/admin/users/create">
+        <button class="create-button">Создать нового пользователя</button>
+    </a>
+</div>
+
+<div class="navigave_buttons">
+    <a th:if="${page > 1}" th:href="'/admin/users/'+(${page} - 1)">
+        <button class="previous_page">Назад</button>
+    </a>
+    <a th:if="${page < pagesCount}" th:href="'/admin/users/'+(${page} + 1)">
+        <button class="next_page">Вперед</button>
+    </a>
+</div>
+</body>
+</html>

@@ -73,7 +73,7 @@ public class UserService implements UserDetailsService {
     }
 
     @NotNull
-    private UserDTO mapToUserDto(@NotNull User user) {
+    public UserDTO mapToUserDto(@NotNull User user) {
         UserDTO userDto = new UserDTO();
         userDto.setId(user.getId());
         userDto.setUserRole(user.getUserRole());
@@ -85,7 +85,7 @@ public class UserService implements UserDetailsService {
     }
 
     @NotNull
-    private User mapToUser(@NotNull UserDTO userDto) {
+    public User mapToUser(@NotNull UserDTO userDto) {
         User user = new User();
         user.setId(userDto.getId());
         user.setUserRole(userDto.getUserRole());
